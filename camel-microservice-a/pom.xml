@@ -31,6 +31,16 @@
 		<camel.version>4.15.0</camel.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-http-starter</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-kafka-starter</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.camel.springboot/camel-activemq-starter -->
 		<dependency>
 			<groupId>org.apache.camel.springboot</groupId>

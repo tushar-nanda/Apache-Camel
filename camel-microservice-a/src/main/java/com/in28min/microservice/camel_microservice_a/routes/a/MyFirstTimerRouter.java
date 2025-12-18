@@ -38,17 +38,17 @@ public class MyFirstTimerRouter extends RouteBuilder {
 //                .to("log:first-timer-a");
 
 
-        from("timer:first-timer")
-                .log("${body}")
-                .transform().constant("My Constant message")
-                .log("${body}")
-                .bean(getCurrentTimeBean)
-                .log("${body}")
-                .bean(loggingComponent)
-                .log("${body}")
-                .process(new SimpleLoggingProcessor())
-                .log("${body}")
-                .to("log:first-timer-a");
+//        from("timer:first-timer")
+//                .log("${body}")
+//                .transform().constant("My Constant message")
+//                .log("${body}")
+//                .bean(getCurrentTimeBean)
+//                .log("${body}")
+//                .bean(loggingComponent)
+//                .log("${body}")
+//                .process(new SimpleLoggingProcessor())
+//                .log("${body}")
+//                .to("log:first-timer-a");
 
     }
 

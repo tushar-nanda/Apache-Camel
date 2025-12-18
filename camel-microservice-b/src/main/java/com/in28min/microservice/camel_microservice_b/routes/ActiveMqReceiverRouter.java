@@ -28,12 +28,14 @@ public class ActiveMqReceiverRouter extends RouteBuilder {
 //                .bean(myCurrencyExchangeTransformation)
 //                .to("log:received-message-from-active-mq");
 
-        from("activemq:my-activemq-xml-queue")
-                .unmarshal()
-                .jacksonXml(CurrencyExchange.class)
-                .to("log:received-message-from-active-xml-mq");
+//        from("activemq:my-activemq-xml-queue")
+//                .unmarshal()
+//                .jacksonXml(CurrencyExchange.class)
+//                .to("log:received-message-from-active-xml-mq");
 
 
+        from("kafka:my-topic?brokers=localhost:9092&groupId=my-group")
+                .to("log:kafka-received?showBody=true");
     }
 
 }
