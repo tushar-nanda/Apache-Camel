@@ -20,8 +20,18 @@ public class MyFirstTimerRouter extends RouteBuilder {
         // tansformation means -> making changes in the body or meessage
         // processing means -> not changing the message or body just using that
         from("timer:first-timer")
-                .transform().constant("Hi My MS-a" + LocalDateTime.now())
+//                .transform().constant("Hi My MS-a" + LocalDateTime.now())
+                .bean("getCurrentTimerBean")
                 .log("${body}")
                 .to("log:first-timer-a");
+    }
+}
+
+@Component
+class GetCurrentTimerBean
+{
+    public String getCurrentTime()
+    {
+        return "the time is " + LocalDateTime.now();
     }
 }
