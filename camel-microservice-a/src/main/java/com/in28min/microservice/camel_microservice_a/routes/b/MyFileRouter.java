@@ -19,6 +19,15 @@ public class MyFileRouter extends RouteBuilder {
                     .log("not a xml but has USD")
                 .otherwise()
                 .log("not an xml file")
+                .end()
+                .to("direct://log-file-values")
                 .to("file:file/output");
+
+        from("direct:log-file-values")
+                .log("${messageHistory} ${file:absolute.path}")
+                .log("${file:name} ${file:name.ext} ${file:name.noext} ${file:onlyname}")
+                .log("${file:onlyname.noext} ${file:parent} ${file:path} ${file:absolute}")
+                .log("${file:size} ${file:modified}")
+                .log("${routeId} ${camelId} ${body}");
     }
 }
