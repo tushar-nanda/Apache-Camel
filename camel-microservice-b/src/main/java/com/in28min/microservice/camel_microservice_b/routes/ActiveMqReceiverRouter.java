@@ -7,7 +7,10 @@ import org.springframework.stereotype.Component;
 public class ActiveMqReceiverRouter extends RouteBuilder {
     @Override
     public void configure() throws Exception {
+
         from("activemq:my-activemq-queue")
                 .to("log:received-message-from-active-mq");
+
+
     }
 }
