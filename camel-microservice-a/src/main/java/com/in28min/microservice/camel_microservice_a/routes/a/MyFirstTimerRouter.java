@@ -1,6 +1,8 @@
 package com.in28min.microservice.camel_microservice_a.routes.a;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,10 @@ public class MyFirstTimerRouter extends RouteBuilder {
 
     @Autowired
     private GetCurrentTimeBean getCurrentTimeBean;
+
+    @Autowired
+    private SimpleLoggingProcessingComponent simpleLoggingProcessingComponent;
+
 
     @Override
     public void configure() throws Exception{
@@ -36,6 +42,8 @@ public class MyFirstTimerRouter extends RouteBuilder {
                 .log("${body}")
                 .bean("getCurrentTimeBean")
                 .log("${body}")
+                .bean("simpleLoggingProcessingComponent")
+                .log("${body}")
                 .to("log:first-timer-a");
 
     }
@@ -47,5 +55,16 @@ class GetCurrentTimeBean
     public String getCurrentTime()
     {
         return "the time is " + LocalDateTime.now();
+    }
+}
+
+@Component
+class SimpleLoggingProcessingComponent
+{
+    private Logger logger = LoggerFactory.getLogger(SimpleLoggingProcessingComponent.class);
+
+    public void process(String message)
+    {
+        logger.info("SimpleLoggingProcessingComponent {}" , message);
     }
 }
