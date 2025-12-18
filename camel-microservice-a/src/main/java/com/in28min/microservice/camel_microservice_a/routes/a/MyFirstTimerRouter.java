@@ -1,5 +1,7 @@
 package com.in28min.microservice.camel_microservice_a.routes.a;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +17,7 @@ public class MyFirstTimerRouter extends RouteBuilder {
     private GetCurrentTimeBean getCurrentTimeBean;
 
     @Autowired
-    private SimpleLoggingProcessingComponent simpleLoggingProcessingComponent;
+    private SimpleLoggingProcessingComponent loggingComponent;
 
 
     @Override
@@ -40,13 +42,17 @@ public class MyFirstTimerRouter extends RouteBuilder {
                 .log("${body}")
                 .transform().constant("My Constant message")
                 .log("${body}")
-                .bean("getCurrentTimeBean")
+                .bean(getCurrentTimeBean)
                 .log("${body}")
-                .bean("simpleLoggingProcessingComponent")
+                .bean(loggingComponent)
+                .log("${body}")
+                .process(new SimpleLoggingProcessor())
                 .log("${body}")
                 .to("log:first-timer-a");
 
     }
+
+
 }
 
 @Component
@@ -66,5 +72,16 @@ class SimpleLoggingProcessingComponent
     public void process(String message)
     {
         logger.info("SimpleLoggingProcessingComponent {}" , message);
+    }
+}
+
+class SimpleLoggingProcessor implements Processor {
+    private Logger logger = LoggerFactory.getLogger(SimpleLoggingProcessor.class);
+
+    @Override
+    public void process(Exchange exchange) throws Exception {
+        logger.info("SimpleLoggingProcessor {}" , exchange.getMessage().getBody());
+
+
     }
 }
