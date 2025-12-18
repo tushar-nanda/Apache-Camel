@@ -1,12 +1,16 @@
 package com.in28min.microservice.camel_microservice_a.routes.a;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Component
 public class MyFirstTimerRouter extends RouteBuilder {
+
+    @Autowired
+    private GetCurrentTimeBean getCurrentTimeBean;
 
     @Override
     public void configure() throws Exception{
@@ -17,18 +21,18 @@ public class MyFirstTimerRouter extends RouteBuilder {
 //        for now we are using
 //        timer , transformation , log
         // we also have something like tranformation and processing
-        // tansformation means -> making changes in the body or meessage
-        // processing means -> not changing the message or body just using that
+        // tansformation means -> making changes in the body or meessage ( chaneges the vody)
+        // processing means -> not changing the message or body just using that ( does not changes the body)
         from("timer:first-timer")
 //                .transform().constant("Hi My MS-a" + LocalDateTime.now())
-                .bean("getCurrentTimerBean")
+                .bean("getCurrentTimeBean")
                 .log("${body}")
                 .to("log:first-timer-a");
     }
 }
 
 @Component
-class GetCurrentTimerBean
+class GetCurrentTimeBean
 {
     public String getCurrentTime()
     {
