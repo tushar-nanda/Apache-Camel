@@ -23,11 +23,21 @@ public class MyFirstTimerRouter extends RouteBuilder {
         // we also have something like tranformation and processing
         // tansformation means -> making changes in the body or meessage ( chaneges the vody)
         // processing means -> not changing the message or body just using that ( does not changes the body)
+//        from("timer:first-timer")
+//            .transform().constant("Hi My MS-a" + LocalDateTime.now())
+//                .bean("getCurrentTimeBean")
+//                .log("${body}")
+//                .to("log:first-timer-a");
+
+
         from("timer:first-timer")
-//                .transform().constant("Hi My MS-a" + LocalDateTime.now())
+                .log("${body}")
+                .transform().constant("My Constant message")
+                .log("${body}")
                 .bean("getCurrentTimeBean")
                 .log("${body}")
                 .to("log:first-timer-a");
+
     }
 }
 
