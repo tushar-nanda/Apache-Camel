@@ -10,9 +10,17 @@ public class EipPatternsRouter extends RouteBuilder {
     public void configure() throws Exception {
 
         //multicast pattern
-        from("timer:multicast?period=10000")
-                .multicast()
-                .to("log:something1" , "log:something2" , "log:something3");
+//        from("timer:multicast?period=10000")
+//                .multicast()
+//                .to("log:something1" , "log:something2" , "log:something3");
+//
+
+        // how we can process the file line by line
+        from("file:file/csv")
+                .unmarshal().csv()
+                .split(body())
+                .to("log:split-files")
+                .end();
 
     }
 }

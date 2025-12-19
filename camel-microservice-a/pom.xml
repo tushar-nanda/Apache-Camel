@@ -32,6 +32,12 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-csv</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.camel.springboot</groupId>
 			<artifactId>camel-http-starter</artifactId>
 			<version>${camel.version}</version>
