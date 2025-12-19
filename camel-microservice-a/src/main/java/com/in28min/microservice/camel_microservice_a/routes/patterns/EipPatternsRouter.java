@@ -36,13 +36,26 @@ public class EipPatternsRouter extends RouteBuilder {
 //                .to("activemq:split-queue");
 
         //aggreae gate pattern
-        from("file:file/aggregate-json")
-                .unmarshal().json(JsonLibrary.Jackson, CurrencyExchange.class)
-                .aggregate(simple("${body.to}"), new ArrayListAggregationStrategy())
-                .completionSize(3)
-                //.completionTimeout(HIGHEST)
-                .to("log:aggregate-json");
+//        from("file:file/aggregate-json")
+//                .unmarshal().json(JsonLibrary.Jackson, CurrencyExchange.class)
+//                .aggregate(simple("${body.to}"), new ArrayListAggregationStrategy())
+//                .completionSize(3)
+//                //.completionTimeout(HIGHEST)
+//                .to("log:aggregate-json");
 
+        // routing slip pattern
+        String routingSlip = "direct:endpoint1,direct:endpoint2";
+
+        from("timer:routingSlip?period=10000")
+                .transform().constant("My message is hardcoded")
+                .routingSlip(simple(routingSlip));
+
+        from("direct:endpoint1")
+                .to("log:Hi directpoint1");
+        from("direct:endpoint2")
+                .to("log:Hi directpoint2");
+        from("direct:endpoint3")
+                .to("log:Hi directpoint3");
     }
 }
 
