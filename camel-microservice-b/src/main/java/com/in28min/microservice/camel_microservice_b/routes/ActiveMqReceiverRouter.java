@@ -34,8 +34,11 @@ public class ActiveMqReceiverRouter extends RouteBuilder {
 //                .to("log:received-message-from-active-xml-mq");
 
 
-        from("kafka:my-topic?brokers=localhost:9092&groupId=my-group")
-                .to("log:kafka-received?showBody=true");
+//        from("kafka:my-topic?brokers=localhost:9092&groupId=my-group")
+//                .to("log:kafka-received?showBody=true");
+
+        from("activemq:split-queue")
+                .to("log:received-message-from-active-mq");
     }
 
 }
